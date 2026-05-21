@@ -1,0 +1,20 @@
+# Build
+bin/
+obj/
+
+# IDE
+.idea/
+.vs/
+*.user
+*.suo
+*.DotSettings.user
+
+# Logs
+Logs/*.txt
+Logs/*.log
+!Logs/.gitkeep
+
+# Database
+*.db
+*.db-shm
+*.db-wal
