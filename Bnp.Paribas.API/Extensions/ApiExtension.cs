@@ -40,6 +40,7 @@ public static class ApiExtension
         }
 
         app.UseLogging();
+        app.UseCorsPolicy();
         app.UseHttpsRedirection();
         app.MapControllers();
         return app;

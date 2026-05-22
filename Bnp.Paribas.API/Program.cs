@@ -8,6 +8,7 @@ builder.Services.AddApi();
 builder.Services.AddVersioning();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddRepositories();
+builder.Services.AddCorsPolicy(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 

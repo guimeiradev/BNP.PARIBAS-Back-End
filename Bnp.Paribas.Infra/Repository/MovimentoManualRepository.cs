@@ -36,19 +36,25 @@ public class MovimentoManualRepository(BnpContext context) : IMovimentoManualRep
 
     public async Task<IEnumerable<GetMovimentoManualDto>> GetAllAsync()
     {
-        return await context.MovimentosManuais
-            .Include(m => m.ProdutoCosif)
-                .ThenInclude(pc => pc.Produto)
-            .Select(m => new GetMovimentoManualDto
-            {
-                DatMes = m.DatMes,
-                DatAno = m.DatAno,
-                CodProduto = m.CodProduto,
-                DesProduto = m.ProdutoCosif.Produto.DesProduto,
-                NumLancamento = m.NumLancamento,
-                DesDescricao = m.DesDescricao,
-                ValValor = m.ValValor
-            })
+        // Simulando uma proc. Ja que o banco que estou usando, sqlite, não suporta procedure. 
+        var sql = @"
+                        SELECT 
+                            mm.DatMes,
+                            mm.DatAno,
+                            mm.CodProduto,
+                            p.DesProduto,
+                            mm.NumLancamento,
+                            mm.DesDescricao,
+                            mm.ValValor
+                        FROM MovimentoManual mm
+                        INNER JOIN Produto p ON p.CodProduto = mm.CodProduto
+                        ORDER BY 
+                            mm.DatMes,
+                            mm.DatAno,
+                            mm.NumLancamento";
+
+        return await context.Database
+            .SqlQueryRaw<GetMovimentoManualDto>(sql)
             .ToListAsync();
     }
 }
